@@ -38,7 +38,7 @@ class LRUCache(BaseCaching):
         """
         if key in self.history:
             self.history.remove(key)
-        if len(self.history) >= 4:
+        if len(self.history) >= BaseCaching.MAX_ITEMS:
             self.history[-1] = key
         else:
             self.history.append(key)
