@@ -2,9 +2,11 @@
 """
 A Basic flask application
 """
-
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
+from typing import (
+    Dict, Union
+)
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -14,7 +16,7 @@ users = {
 }
 
 
-def get_user(user_id):
+def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     """
     Validate user login details
     Args:
@@ -22,12 +24,12 @@ def get_user(user_id):
     Returns:
         (Dict): user dictionary if id is valid else None
     """
-    return users.get(int(user_id), 0)
+    return users.get(int(id), 0)
 
 
-class Config:
+class Config():
     """
-    class that has a LANGUAGES class attribute
+    Application configuration class
     """
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
@@ -42,7 +44,7 @@ babel = Babel(app)
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """
     Gets locale from request object
     """
