@@ -10,6 +10,7 @@ from flask import Flask
 from flask import g, request
 from flask import render_template
 from flask_babel import Babel
+from pytz import timezone, exceptions
 
 
 class Config(object):
@@ -56,9 +57,12 @@ def get_timezone():
         Config.BABEL_DEFAULT_TIMEZONE
     ]
 
-    for local in options:
-        if local:
-            return local
+    for timez in options:
+        if timez:
+            try:
+                return timezone(timez)
+            except exceptions.UnknownTimeZoneError:
+                return timezone(Config.BABEL_DEFAULT_TIMEZONE)
 
 
 users = {
