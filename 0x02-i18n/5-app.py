@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-0. Basic Flask app
+A Basic flask application
 """
 
 from flask import Flask, render_template, request, g
@@ -26,7 +26,9 @@ def get_user(user_id):
 
 
 class Config:
-    """ class that has a LANGUAGES class attribute """
+    """
+    class that has a LANGUAGES class attribute
+    """
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
     LANGUAGES = ["en", "fr"]
@@ -51,7 +53,7 @@ def get_locale():
 
 
 @app.before_request
-def before_request():
+def before_request() -> str:
     """
     Adds valid user to the global session object `g`
     """
