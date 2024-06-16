@@ -21,6 +21,13 @@ app.config['BABEL_DEFAULT_TIMEZONE'] = Config.BABEL_DEFAULT_TIMEZONE
 babel = Babel(app)
 
 
+@babel.localeselector
+def get_locale():
+    """ select the langueage based on the header http """
+
+    return request.accept_languages.best_match(Config.LANGUAGES)
+
+
 @app.route('/')
 def index() -> str:
     """ Route app """
