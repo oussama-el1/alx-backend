@@ -2,7 +2,7 @@
 """
 0. Basic Flask app
 """
-import flask
+
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
 
@@ -44,14 +44,14 @@ def get_locale():
 
 @app.before_request
 def before_request():
-    """ before request"""
+    """ before request to get the login user before request"""
     loged_in = request.args.get('login_as', 0)
     setattr(g, 'user', get_user(loged_in))
 
 
 @app.route('/')
 def index() -> str:
-    """ Route app """
+    """ Route app for the Flask app"""
     return render_template('5-index.html')
 
 
