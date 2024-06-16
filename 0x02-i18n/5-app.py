@@ -55,18 +55,14 @@ def get_locale() -> str:
 
 
 @app.before_request
-def before_request() -> str:
+def before_request():
     """
-    Sets the global 'g.user' object based on the logged-in
-    user ID provided in the request.
-    If the user ID is valid, retrieves the user details
-    and stores them in 'g.user'.
+    Adds valid user to the global session object `g`
     """
-    loged_in = request.args.get('login_as', 0)
-    setattr(g, 'user', get_user(loged_in))
+    setattr(g, 'user', get_user(request.args.get('login_as', 0)))
 
 
-@app.route('/')
+@app.route('/', strict_slashes=False)
 def index() -> str:
     """
     Renders a basic html template
