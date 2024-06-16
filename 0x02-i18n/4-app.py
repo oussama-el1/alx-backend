@@ -24,15 +24,16 @@ babel = Babel(app)
 @babel.localeselector
 def get_locale():
     """ select the langueage based on the header http """
-    local = request.args.get('locale', 'en')
-    return request.accept_languages.best_match(local)
+    locale = request.args.get('locale', '').strip()
+    if locale and locale in Config.LANGUAGES:
+        return locale
+    return request.accept_languages.best_match(Config.LANGUAGES)
 
 
 @app.route('/')
 def index() -> str:
     """ Route app """
-    local = get_locale()
-    return render_template('3-index.html', local=local)
+    return render_template('3-index.html')
 
 
 if __name__ == "__main__":
