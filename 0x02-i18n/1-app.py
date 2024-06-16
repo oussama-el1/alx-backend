@@ -17,7 +17,7 @@ class Config:
 app = Flask(__name__)
 app.config['BABEL_DEFAULT_LOCALE'] = Config.BABEL_DEFAULT_LOCALE
 app.config['BABEL_DEFAULT_TIMEZONE'] = Config.BABEL_DEFAULT_TIMEZONE
-
+app.config(Config)
 babel = Babel(app)
 
 
