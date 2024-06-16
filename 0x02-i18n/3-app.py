@@ -4,7 +4,7 @@
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel
 
 
 class Config:
@@ -30,8 +30,7 @@ def get_locale():
 
 @app.route('/')
 def index() -> str:
-    """ Route app endpoint for the Flask app """
-
+    """ Route app """
     return render_template('3-index.html')
 
 
