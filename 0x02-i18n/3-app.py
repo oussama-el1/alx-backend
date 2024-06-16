@@ -31,10 +31,7 @@ def get_locale():
 @app.route('/')
 def index() -> str:
     """ Route app """
-    title = _('Welcome to Holberton')
-    header1 = _('Hello world')
-    return render_template('3-index.html', title=title,
-                           header1=header1)
+    return render_template('3-index.html')
 
 
 if __name__ == "__main__":
