@@ -30,7 +30,8 @@ def get_locale():
 
 @app.route('/')
 def index() -> str:
-    """ Route app """
+    """ Route app endpoint for the Flask app """
+
     return render_template('3-index.html')
 
 
