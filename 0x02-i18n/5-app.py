@@ -15,7 +15,13 @@ users = {
 
 
 def get_user(user_id):
-    """ get a user based on id """
+    """
+    Validate user login details
+    Args:
+        id (str): user id
+    Returns:
+        (Dict): user dictionary if id is valid else None
+    """
     return users.get(int(user_id), 0)
 
 
@@ -35,8 +41,9 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale():
-    """ select the langueage based
-    on the header http """
+    """
+    Gets locale from request object
+    """
     locale = request.args.get('locale', '').strip()
     if locale and locale in Config.LANGUAGES:
         return locale
@@ -45,16 +52,18 @@ def get_locale():
 
 @app.before_request
 def before_request():
-    """ before request to get the
-    login user before request """
+    """
+    Adds valid user to the global session object `g`
+    """
     loged_in = request.args.get('login_as', 0)
     setattr(g, 'user', get_user(loged_in))
 
 
 @app.route('/')
 def index() -> str:
-    """ Route app for
-    the Flask app"""
+    """
+    Renders a basic html template
+    """
     return render_template('5-index.html')
 
 
