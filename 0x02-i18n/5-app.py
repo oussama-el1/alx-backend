@@ -2,11 +2,43 @@
 """
 A Basic flask application
 """
-from flask import Flask, render_template, request, g
-from flask_babel import Babel, _
 from typing import (
     Dict, Union
 )
+
+from flask import Flask
+from flask import g, request
+from flask import render_template
+from flask_babel import Babel
+
+
+class Config(object):
+    """
+    Application configuration class
+    """
+    LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+
+# Instantiate the application object
+app = Flask(__name__)
+app.config.from_object(Config)
+
+# Wrap the application with Babel
+babel = Babel(app)
+
+
+@babel.localeselector
+def get_locale() -> str:
+    """
+    Gets locale from request object
+    """
+    locale = request.args.get('locale', '').strip()
+    if locale and locale in Config.LANGUAGES:
+        return locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -27,33 +59,6 @@ def get_user(id) -> Union[Dict[str, Union[str, None]], None]:
     return users.get(int(id), 0)
 
 
-class Config():
-    """
-    Application configuration class
-    """
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
-    LANGUAGES = ["en", "fr"]
-
-
-app = Flask(__name__)
-app.config.from_object(Config)
-app.config['BABEL_DEFAULT_LOCALE'] = Config.BABEL_DEFAULT_LOCALE
-app.config['BABEL_DEFAULT_TIMEZONE'] = Config.BABEL_DEFAULT_TIMEZONE
-babel = Babel(app)
-
-
-@babel.localeselector
-def get_locale() -> str:
-    """
-    Gets locale from request object
-    """
-    locale = request.args.get('locale', '').strip()
-    if locale and locale in Config.LANGUAGES:
-        return locale
-    return request.accept_languages.best_match(Config.LANGUAGES)
-
-
 @app.before_request
 def before_request():
     """
@@ -70,5 +75,5 @@ def index() -> str:
     return render_template('5-index.html')
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run()
