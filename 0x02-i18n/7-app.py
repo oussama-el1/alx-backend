@@ -45,6 +45,22 @@ def get_locale() -> str:
             return locale
 
 
+@babel.timezoneselector
+def get_timezone():
+    """
+    get_timezone
+    """
+    options = [
+        request.args.get("timezone", '').strip(),
+        g.user.get("timezone") if g.user else None,
+        Config.BABEL_DEFAULT_TIMEZONE
+    ]
+
+    for local in options:
+        if local:
+            return local
+
+
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
