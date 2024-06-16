@@ -4,7 +4,7 @@
 """
 
 from flask import Flask, render_template, request
-from flask_babel import Babel
+from flask_babel import Babel, _
 
 
 class Config:
@@ -31,7 +31,10 @@ def get_locale():
 @app.route('/')
 def index() -> str:
     """ Route app """
-    return render_template('3-index.html')
+    title = _('Welcome to Holberton')
+    header1 = _('Hello world')
+    return render_template('3-index.html', title=title,
+                           header1=header1)
 
 
 if __name__ == "__main__":
