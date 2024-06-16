@@ -7,9 +7,16 @@ from flask import Flask, render_template, request
 from flask_babel import Babel
 
 
+class Config:
+    """ class that has a LANGUAGES class attribute """
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
+    LANGUAGES = ["en", "fr"]
+
+
 app = Flask(__name__)
-app.config['BABEL_DEFAULT_LOCALE'] = 'en'
-app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
+app.config['BABEL_DEFAULT_LOCALE'] = Config.BABEL_DEFAULT_LOCALE
+app.config['BABEL_DEFAULT_TIMEZONE'] = Config.BABEL_DEFAULT_TIMEZONE
 
 babel = Babel(app)
 
@@ -29,9 +36,3 @@ def index() -> str:
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
-
-class Config:
-    """ class that has a LANGUAGES class attribute """
-
-    LANGUAGES = ["en", "fr"]
