@@ -55,7 +55,10 @@ def get_locale():
 @app.before_request
 def before_request() -> str:
     """
-    Adds valid user to the global session object `g`
+    Sets the global 'g.user' object based on the logged-in
+    user ID provided in the request.
+    If the user ID is valid, retrieves the user details
+    and stores them in 'g.user'.
     """
     loged_in = request.args.get('login_as', 0)
     setattr(g, 'user', get_user(loged_in))
