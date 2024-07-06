@@ -9,7 +9,7 @@ from typing import (
 from flask import Flask
 from flask import g, request
 from flask import render_template
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from pytz import timezone, exceptions
 from datetime import datetime
 
@@ -91,6 +91,7 @@ def before_request():
     Adds valid user to the global session object `g`
     """
     setattr(g, 'user', get_user(request.args.get('login_as', 0)))
+    setattr(g, 'time', format_datetime(datetime.now()))
 
 
 @app.route('/', strict_slashes=False)
@@ -98,10 +99,7 @@ def index() -> str:
     """
     Renders a basic html template
     """
-    user_tz = get_timezone()
-    current_time = datetime.now(user_tz)
-    current_time_str = current_time.strftime('%Y-%m-%d %H:%M:%S')
-    return render_template('6-index.html', current_time=current_time_str)
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
