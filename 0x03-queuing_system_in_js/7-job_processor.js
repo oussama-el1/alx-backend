@@ -13,8 +13,8 @@ function sendNotification(phoneNumber, message, job, done) {
         console.log(`Sending notification to ${phoneNumber}, with message: ${message}`);
       }
     }
-    if (blacklist.includes(job.data.phoneNumber)) {
-      return done(new Error(`Phone number ${job.data.phoneNumber} is blacklisted`));
+    if (blacklist.includes(phoneNumber)) {
+      return done(new Error(`Phone number ${phoneNumber} is blacklisted`));
     }
     if (p === total) {
       return done();
