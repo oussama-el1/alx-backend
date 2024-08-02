@@ -29,7 +29,6 @@ app.get('/available_seats', async (req, res) => {
     res.statusCode = 200;
     res.json({ available_seats: data });
   } catch (err) {
-    res.statusCode = 500;
     res.json({ status: err.message });
   }
 });
